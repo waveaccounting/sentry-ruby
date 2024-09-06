@@ -56,7 +56,11 @@ module Sentry
 
         # some loggers will add leading/trailing space as they (incorrectly, mind you)
         # think of logging as a shortcut to std{out,err}
-        message = message.to_s.strip
+        begin
+          message = message.to_s.strip
+        rescue
+          message = message.to_s
+        end
 
         last_crumb = current_breadcrumbs.peek
         # try to avoid dupes from logger broadcasts
